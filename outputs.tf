@@ -10,6 +10,12 @@ resource "aws_ssm_parameter" "cluster_arn" {
   value = aws_ecs_cluster.main.arn
 }
 
+resource "aws_ssm_parameter" "cluster_name" {
+  name  = "/${var.project}/${var.environment}/ecs/clustername"
+  type  = "String"
+  value = aws_ecs_cluster.main.name
+}
+
 resource "aws_ssm_parameter" "ecs_sg" {
   name  = "/${var.project}/${var.environment}/ecs/securitygroupid"
   type  = "String"
