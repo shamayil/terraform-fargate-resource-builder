@@ -14,6 +14,11 @@ variable "region" {
   type = string
 }
 
+variable "sqs_list" {
+  type    = list(string)
+  default = []
+}
+
 #variable "cidr_block" {
 #  type = string
 #}

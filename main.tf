@@ -143,7 +143,8 @@ resource "aws_ecr_repository" "main" {
 
 # Resource SQS ##
 resource "aws_sqs_queue" "main" {
-  name                       = "${var.project}-${var.environment}-${var.service_name}"
+  for_each                   = toset(var.sqs_list)
+  name                       = "${var.project}-${var.environment}-${var.service_name}-${each.value}"
   visibility_timeout_seconds = 60
   delay_seconds              = 0
   max_message_size           = 262144

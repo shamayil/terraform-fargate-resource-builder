@@ -1,7 +1,15 @@
 resource "aws_ssm_parameter" "sqs" {
-  name  = "/${var.project}/${var.environment}/${var.service_name}/sqs/url"
-  type  = "String"
-  value = aws_sqs_queue.main.name
+  for_each = toset(var.sqs_list)
+  name     = "/${var.project}/${var.environment}/${var.service_name}/${each.value}/sqs/url"
+  type     = "String"
+  value    = aws_sqs_queue.main[each.value].name
+}
+
+resource "aws_ssm_parameter" "sqs_full_url" {
+  for_each = toset(var.sqs_list)
+  name     = "/${var.project}/${var.environment}/${var.service_name}/${each.value}/sqs/full_url"
+  type     = "String"
+  value    = aws_sqs_queue.main[each.value].url
 }
 
 resource "aws_ssm_parameter" "cluster_arn" {
